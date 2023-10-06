@@ -1,6 +1,6 @@
 import { shallowMount, createWrapper, mount } from '@vue/test-utils';
 import { format, parse } from 'date-fns';
-import Popup from '../src/popup';
+import Popup from '../src/popup.vue';
 import DatePicker from '../src/date-picker';
 
 let wrapper;
@@ -194,7 +194,7 @@ describe('DatePicker', () => {
 
   it('prop: shortcut', async () => {
     const date = new Date(2019, 4, 10);
-    wrapper = shallowMount(DatePicker, {
+    wrapper = mount(DatePicker, {
       propsData: {
         open: true,
         valueType: 'YYYY/MM/DD',
@@ -224,7 +224,7 @@ describe('DatePicker', () => {
         },
       ],
     });
-    btn.trigger('click');
+    await btn.trigger('click');
     expect(emitted.input[1]).toEqual([['2019/05/10', '2019/05/10']]);
   });
 
@@ -352,7 +352,7 @@ describe('DatePicker', () => {
       },
     });
     const els = wrapper.findAll('button');
-    els.wrappers.forEach(v => {
+    els.wrappers.forEach((v) => {
       expect(v.element.type).toBe('button');
     });
   });
@@ -428,7 +428,7 @@ describe('DatePicker', () => {
     wrapper = shallowMount(DatePicker, {
       format: 'YYYY-MM-DD',
       propsData: {
-        disabledDate: date => {
+        disabledDate: (date) => {
           return date < someday;
         },
       },
